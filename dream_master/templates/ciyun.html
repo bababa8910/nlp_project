@@ -1,0 +1,69 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .scrollable-body {
+            height: 500px;
+            overflow-y: scroll;
+        }
+
+        .fixed-height {
+            height: 500px;
+        }
+    </style>
+
+    <title>Your Dream Analysis</title>
+</head>
+<body>
+<div class="container my-4">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="dream" placeholder="请输入梦境内容" value="{{ dream }}" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+
+    {% if analysis %}
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">识别出的实体</div>
+                    <div class="scrollable-body">
+                        <ul class="list-group list-group-flush">
+                            {% for entity in analysis.entities %}
+                                <li class="list-group-item">{{ entity.0 }} ({{ entity.1 }})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">词云</div>
+                    <div class="fixed-height p-0">
+                        <iframe src="{% static 'dream_keywords_wordcloud.html' %}" class="w-100 h-100"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
