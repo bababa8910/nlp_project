@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search</title>
+    <style>
+        /* 添加一些样式来美化页面 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #fff;
+            text-align: center;  /* 添加这一行 */
+        }
+
+        li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        li a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            background-color: #f2f2f2;
+        }
+
+        li a:hover {
+            background-color: #ddd;
+        }
+
+        .container {
+            margin: 20px auto;  /* 修改这一行，将边距设置为自动，使容器居中 */
+            max-width: 1000px;  /* 修改这一行，将最大宽度增加到 1000px */
+        }
+
+        p {
+            padding: 10px;
+            background-color: #fff;
+            margin-bottom: 10px;
+            text-align: center;  /* 添加这一行 */
+        }
+
+        table {
+            margin: 0 auto;  /* 修改这一行，将表格居中 */
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .search-form {
+            text-align: center;  /* 居中对齐搜索框 */
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search</h1>
+    <div class="container">
+        <ul>
+            {% for category in categories %}
+            <li><a href="{% url 'category' category=category|urlencode %}">{{ category }}</a></li>
+            {% endfor %}
+            <!-- 添加一个新的链接，指向emotion_analysis页面 -->
+        </ul>
+    </div>
+    <div class="container">
+        <form class="search-form" method="GET">
+            <input type="text" name="search" placeholder="Search...">
+            <input type="submit" value="Search">
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Dream</th>
+                    <th>Decode</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.dream }}</td>
+                    <td>{{ item.decode }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
