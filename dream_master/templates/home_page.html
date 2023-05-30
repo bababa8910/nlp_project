@@ -1,0 +1,180 @@
+<!--21122905 网络空间安全 张琦骋-->
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DreamMaster System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="./css/typing-style.css">
+    <style>
+        .h1
+        {
+            font-size: 90px;
+            font-family: 'Times New Roman', Times, serif;
+            color: #00008B;
+            text-align: center;
+            margin-bottom: 100px;
+            animation: typing 5s steps(42, end), blink-caret .75s step-end infinite;
+            word-break: break-all;
+            overflow: hidden;
+            white-space:nowrap;
+        }
+        .kuang{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+        }
+        .bubble{
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid #1E90FF;
+            box-shadow: inset 0 0 8px  #fff;
+            animation: flutter 10s infinite;
+            opacity: 1;
+        }
+        @keyframes flutter {
+            0%{
+                transform: translateX(0);
+                bottom: -100px;
+                opacity: 1;
+            }
+            50%{
+                transform: translateX(100px);
+                opacity: 0.5;
+            }
+            100%{
+                transform: translateX(0px);
+                bottom: 100%;
+                opacity: 0;
+            }
+        }
+        .bubble:nth-child(1){
+            left: -10%;
+            width: 50px;
+            height: 50px;
+            animation-duration: 9s;
+            animation-delay: 0.1s;
+        }
+        .bubble:nth-child(2){
+            left: 15%;
+            width: 20px;
+            height: 20px;
+            animation-duration: 6s;
+            animation-delay: 1.5s;
+        }
+        .bubble:nth-child(3){
+            left: 20%;
+            width: 60px;
+            height: 60px;
+            animation-duration: 10s;
+        }
+        .bubble:nth-child(4){
+            left: 30%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 5.5s;
+            animation-delay: 1.5s;
+        }
+        .bubble:nth-child(5){
+            left: 40%;
+            width: 50px;
+            height: 50px;
+            animation-duration: 12s;
+        }
+        .bubble:nth-child(6){
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            animation-duration: 6s;
+            animation-delay: 1s;
+        }
+        .bubble:nth-child(7){
+            left: 60%;
+            width: 40px;
+            height: 40px;
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+        .bubble:nth-child(8){
+            left: 65%;
+            width: 60px;
+            height: 60px;
+            animation-duration: 15s;
+        }
+        .bubble:nth-child(9){
+            left: 80%;
+            width: 55px;
+            height: 55px;
+            animation-duration: 9s;
+            animation-delay: 0.5s;
+        }
+        .bubble:nth-child(10){
+            left: 100%;
+            width: 40px;
+            height: 40px;
+            animation-duration: 12s;
+        }
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 21em;
+            }
+        }
+        @keyframes blink-caret {
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: currentColor;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1 class="h1" style="font-style: italic">DreamMaster System</h1>
+<a href="{% url 'index' %}" target="_blank">Search</a>
+<a href="{% url 'new_view' %}" target="_blank">Start</a> <!-- 修改的部分 -->
+    <script type="text/javascript">
+        const buttons = document.querySelectorAll('a');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                let x = e.clientX - e.target.offsetLeft;
+                let y = e.clientY - e.target.offsetTop;
+
+                let ripples = document.createElement('span');
+                ripples.style.left = x + 'px';
+                ripples.style.top = y + 'px';
+                this.appendChild(ripples);
+
+                setTimeout(() => {
+                    ripples.remove()
+                }, 1000);
+            });
+        });
+    </script>
+    <div class="kuang">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+</body>
+</html>
