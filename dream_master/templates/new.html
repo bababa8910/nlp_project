@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Combined Dream Analysis</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .scrollable-body {
+            height: 500px;
+            overflow-y: scroll;
+        }
+
+        .fixed-height {
+            height: 500px;
+        }
+
+        h1 {
+            font-family: Arial, sans-serif;
+            font-size: 2.5em;
+            color: #333;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .card-header {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- 上部分 -->
+        <h1>简短梦境</h1>
+        <!-- 搜索框部分 -->
+        <div class="row justify-content-center my-4">
+            <div class="col-md-6">
+                <form method="POST" class="input-group">
+                    {% csrf_token %}
+                    <input type="hidden" id="form_id" name="form_id" value="short_form">
+                    <input type="text" id="dream_input" name="dream_input" placeholder="请输入你的梦境" class="form-control" required>
+                    <div class="input-group-append">
+                        <input type="submit" value="提交" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 功能块部分 -->
+        <div class="row">
+            <!-- 梦境生成部分 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">梦境的生成</div>
+                    <div class="card-body">
+                        {% if completed_dream %}
+                        <p>{{ completed_dream }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 梦境解析部分 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">梦境的解析</div>
+                    <div class="card-body">
+                        {% if interpretation %}
+                        <p>{{ interpretation }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情感分析部分 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">梦境的情感分析</div>
+                    <div class="card-body">
+                        {% if sentiment_result %}
+                        <p>情感标签: {{ sentiment_result.label }}</p>
+                        <p>置信度: {{ sentiment_result.score }}</p>
+                        {% endif %}
+                        {% if elements %}
+                        <h4>梦境元素及其心理含义</h4>
+                        {% for element in elements %}
+                            <p>元素: {{ element.0 }} 心理含义: {{ element.1 }}</p>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 下部分 -->
+        <h1>详细梦境</h1>
+        <!-- 搜索框部分 -->
+        <div class="row justify-content-center my-4">
+            <div class="col-md-6">
+                <form method="POST" class="input-group">
+                    {% csrf_token %}
+                    <input type="hidden" id="form_id" name="form_id" value="detailed_form">
+                    <input type="text" id="dream_input_detailed" name="dream_input_detailed" placeholder="请输入你的详细梦境" class="form-control" required>
+                    <div class="input-group-append">
+                        <input type="submit" value="提交" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 功能块部分 -->
+         {% if analysis %}
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">识别出的实体</div>
+                    <div class="scrollable-body">
+                        <ul class="list-group list-group-flush">
+                            {% for entity in analysis.entities %}
+                                <li class="list-group-item">{{ entity.0 }} ({{ entity.1 }})</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">词云</div>
+                    <div class="fixed-height p-0">
+                        <iframe src="{% static 'dream_keywords_wordcloud.html' %}" class="w-100 h-100"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    </div>
+</body>
+</html>
